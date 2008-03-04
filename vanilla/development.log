@@ -1,0 +1,6 @@
+GET /new | Status: 200 | Params: {:format=>"html", :snip=>"new"}
+GET /system/css.raw | Status: 200 | Params: {:part=>"css", :format=>"raw", :snip=>"system"}
+Redirecting to: /start
+GET / | Status: 302 | Params: {:format=>"html"}
+GET /start | Status: 200 | Params: {:format=>"html", :snip=>"start"}
+GET /system/css.raw | Status: 200 | Params: {:part=>"css", :format=>"raw", :snip=>"system"}

@@ -1,0 +1,20 @@
+Vanilla.rb
+==========
+
+The base flavour. The classic ice cream.
+
+And the freakiest wiki wiki wiki wiki wiki wiki wiki wiki you've ever seen.
+
+Use at your own risk; really. I showed it to a cat, and the cat started talking in French. It was MESSED. UP.
+
+
+Usage
+=====
+
+$ ruby vanilla/bootstrap.rb
+
+... a bunch of stuff gets created
+
+$ ruby vanilla/snips_on_sinatra.rb
+
+... the wiki starts. THE PAIN BEGINS.
