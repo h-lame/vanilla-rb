@@ -3,7 +3,7 @@
 dynasnip "edit", %{
   class EditSnip < Dynasnip
     def handle(*args)
-      prevent_snip_inclusion(Render.render_without_including_snips('edit', :template, [], context, Render::Erb))
+      prevent_snip_inclusion(Vanilla::Render.render_without_including_snips('edit', :template, [], context, Vanilla::Render::Erb))
     end
   end
   EditSnip
