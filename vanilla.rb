@@ -14,7 +14,7 @@ ActiveRecord::Base.establish_connection(
 module Vanilla
   def self.present(params, snip_name, part=nil)
     case params[:format]
-    when 'html'
+    when 'html', nil
       # render in main template
       Vanilla::Render.render('system', :main_template, [], params, Vanilla::Render::Erb)
     when 'raw'
