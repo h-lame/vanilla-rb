@@ -1,2 +1,0 @@
-GET /start | Status: 200 | Params: {:format=>"html", :snip=>"start"}
-GET /system/css.raw | Status: 200 | Params: {:part=>"css", :format=>"raw", :snip=>"system"}
