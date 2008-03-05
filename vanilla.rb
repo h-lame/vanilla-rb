@@ -1,7 +1,6 @@
-$LOAD_PATH << "lib"
-
 require 'rubygems'
 require 'soup'
+
 require 'vanilla/routes'
 require 'vanilla/render'
 require 'vanilla/dynasnip'

@@ -1,6 +1,3 @@
-$LOAD_PATH << "lib"
-$LOAD_PATH.uniq!
-
 require 'vanilla'
 
 def snip(name, content, other_attributes={})

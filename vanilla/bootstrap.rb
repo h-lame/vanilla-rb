@@ -1,6 +1,3 @@
-$LOAD_PATH << "lib"
-$LOAD_PATH.uniq!
-
 require 'vanilla'
 
 def load_snips(kind)
