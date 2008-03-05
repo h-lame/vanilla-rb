@@ -7,15 +7,15 @@ system.main_template = <<-HTML
   <title>{current_snip name}</title>
   <script language="javascript" src="/public/javascripts/jquery-1.2.3.js" />
   <script language="javascript" src="/public/javascripts/vanilla.js" />
-  <link rel="stylesheet" type="text/css" media="screen"  href="<%= Router.url_to_raw("system", "css") %>" />
+  <link rel="stylesheet" type="text/css" media="screen"  href="<%= Vanilla::Routes.url_to_raw("system", "css") %>" />
 </head>
 <body>
   <div id="content">
     <div id="controls">
       <strong><a href="/">home</a></strong>, 
-      <%= ::Router.new_link %> ::
+      <%= Vanilla::Routes.new_link %> ::
       <strong>{link_to_current_snip}</strong> &rarr; 
-      <%= ::Router.edit_link("{current_snip name}", "Edit") %>
+      <%= Vanilla::Routes.edit_link("{current_snip name}", "Edit") %>
     </div>
     {current_snip}
   </div>

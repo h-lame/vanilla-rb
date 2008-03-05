@@ -12,11 +12,11 @@ class Save < Dynasnip
       snip.__send__(:set_value, name, value)
     end
     snip.save
-    %{Saved snip \#{::Router.link_to snip_attributes[:name]} ok}
+    %{Saved snip \#{Vanilla::Routes.link_to snip_attributes[:name]} ok}
   rescue Exception => e
     p snip_attributes
     Snip.new(snip_attributes).save
-    %{Created snip \#{::Router.link_to snip_attributes[:name]} ok}
+    %{Created snip \#{Vanilla::Routes.link_to snip_attributes[:name]} ok}
   end
 end
 Save  

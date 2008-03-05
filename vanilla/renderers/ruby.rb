@@ -1,6 +1,6 @@
-require 'render'
+require 'vanilla/render'
 
-module Render
+module Vanilla::Render
   # Snips that render_as "Ruby" should define a class which has the instance
   # method 'handle' on it.
   # The result of the handle method invocation always has #to_s called on it.
@@ -12,7 +12,7 @@ module Render
   class Ruby < Base
     def process_text(snip, content, args)
       handler_klass = eval(content, binding, snip.name)
-      instance = if handler_klass.ancestors.include?(Render::Base)
+      instance = if handler_klass.ancestors.include?(Vanilla::Render::Base)
         handler_klass.new(snip, nil, args, context)
       else
         handler_klass.new

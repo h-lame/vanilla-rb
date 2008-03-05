@@ -1,9 +1,9 @@
-require 'render'
+require 'vanilla/render'
 
 require 'erb'
 include ERB::Util
 
-module Render
+module Vanilla::Render
   class Erb < Base
     def process_text(snip, content, args)
       ERB.new(content).result(binding)

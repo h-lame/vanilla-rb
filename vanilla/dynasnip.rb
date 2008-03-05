@@ -1,6 +1,6 @@
-require File.join(File.dirname(__FILE__), *%w[.. render])
+require 'vanilla/render'
 
-class Dynasnip < Render::Base
+class Dynasnip < Vanilla::Render::Base
   # dynasnips gain access to the context in the same way as Render::Base
   # subclasses
 end

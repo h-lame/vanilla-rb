@@ -1,8 +1,7 @@
 $LOAD_PATH << "lib"
 $LOAD_PATH.uniq!
 
-require 'soup'
-require 'render'
+require 'vanilla'
 
 def snip(name, content, other_attributes={})
   snip = Snip.new(other_attributes.merge(:name => name))

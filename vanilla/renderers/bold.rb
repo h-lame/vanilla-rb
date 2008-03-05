@@ -1,6 +1,6 @@
-require 'render'
+require 'vanilla/render'
 
-module Render
+module Vanilla::Render
   class Bold < Base
     def process_text(snip, content, args)
       "<b>#{content}</b>" 

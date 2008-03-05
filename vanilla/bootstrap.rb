@@ -1,14 +1,7 @@
 $LOAD_PATH << "lib"
 $LOAD_PATH.uniq!
 
-require 'rubygems'
-require 'soup'
-require 'render'
-
-ActiveRecord::Base.establish_connection(
-  :adapter => 'sqlite3',
-  :database => 'soup_development.db'
-)
+require 'vanilla'
 
 def load_snips(kind)
   Dir[File.join(File.dirname(__FILE__), kind, '*.rb')].each do |f|

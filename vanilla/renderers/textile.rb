@@ -1,10 +1,10 @@
-require 'render'
+require 'vanilla/render'
 
 require 'rubygems'
 gem 'RedCloth'
 require 'redcloth'
 
-module Render
+module Vanilla::Render
   class Textile < Base
     def process_text(snip, content, args)
       RedCloth.new(content).to_html

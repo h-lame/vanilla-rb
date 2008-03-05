@@ -8,7 +8,7 @@ dynasnip "edit", %{
   end
   EditSnip
 }, :template => %{
-  <form action="<%= ::Router.url_to "save" %>">
+  <form action="<%= Vanilla::Routes.url_to "save" %>">
   <dl class="attributes">
     <% snip_to_edit = Snip[context[:snip_to_edit]] %>
     <% snip_to_edit.attributes.each do |name, value| %>
