@@ -1,22 +1,35 @@
-Vanilla.rb
-==========
+--~::{ Vanilla.rb }::~---
+=========================
 
-The base flavour. The classic ice cream.
+  A wandering soul; a repo clone'd -
+  his meta_klass and methods honed.
+  But tarry he 'ponst what dark endeavour
+  with code of such unknowable terror?
 
-And the freakiest wiki-wonki-wiki-wonki-wiki-wonki-wickedy-wiki you've ever seen. 
+                              - H.P. Gemcraft, 1914
 
-But you must not fear; fear is the mind-killer; fear is the little death that brings total oblivion; 
+
+Preface
+-------
+
+The base flavour. The classic ice cream. Except riddled through with blood-red gemstones - Ruby gemstones.
+This mad gelato will break your teeth.
+
+... and run the freakiest wiki-wonki-wiki-wonki-wiki-wonki-wickedy-wiki you've ever seen. 
+
+But you must not fear: fear is the mind-killer; fear is the little death that brings total oblivion; 
 fear is the chilling terror that makes you believe that *everything* is better when Model lays with 
 Controller and View in peace.
 
 Vanilla.rb cries "HERESY!" upon that layered orgy of filth. Vanilla.rb says "EMBRACE CHAOS!". Vanilla.rb
 says "EVERY SNIP FOR THEMSELVES!". Vanilla.rb waits quietly, in the dark corners.
 
-Use at your own risk; really. I showed it to a cat, and the cat started talking in French. It was MESSED. UP.
+Use at your own risk; really. I showed it to a cat, and the cat started talking in French. 
+It was MESSED. UP.
 
 
-Usage
-=====
+Thee Darke Invocation
+=====================
 
 $ ruby vanilla/bootstrap.rb
 
@@ -25,3 +38,10 @@ $ ruby vanilla/bootstrap.rb
 $ ruby vanilla/snips_on_sinatra.rb
 
 ... the wonki starts. THE PAIN BEGINS.
+
+
+Usage
+=====
+
+Currently unknowable; soon I hope to compile such a nercronomicon as to allow mortal kind to
+conjure up Snips and Dynasnips and Renderers...
