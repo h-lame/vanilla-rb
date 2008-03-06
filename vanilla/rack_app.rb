@@ -18,7 +18,9 @@ module Vanilla
     
     def call(env)
       request = Request.new(env)
-    
+      
+      # TODO: there must be a better way to get the routing done
+      
       case request.path_info
       when URL_ROOT
         snip = 'start'
