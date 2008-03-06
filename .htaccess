@@ -1,0 +1,7 @@
+AddHandler fastcgi-script .fcgi
+AddHandler cgi-script .cgi
+Options +FollowSymLinks +ExecCGI
+
+RewriteEngine On
+RewriteRule ^(.*)$ vanilla.cgi [QSA,L]
+# RewriteRule ^(.*)$ vanilla.fcgi [QSA,L]
