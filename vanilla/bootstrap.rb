@@ -8,7 +8,7 @@ def load_snips(kind)
 end
 
 if __FILE__ == $0
-  Tuple.prepare_database 
+  Soup.prepare 
   
   require File.join(File.dirname(__FILE__), *%w[snip_helper])
 
