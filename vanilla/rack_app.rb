@@ -16,6 +16,10 @@ module Vanilla
       end
     end
     
+    def initialize
+      Soup.prepare
+    end
+    
     def call(env)
       request = Request.new(env)
       
