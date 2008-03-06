@@ -1,14 +1,10 @@
 require 'rubygems'
+gem 'soup', '>= 0.1.2'
 require 'soup'
 
 require 'vanilla/routes'
 require 'vanilla/render'
 require 'vanilla/dynasnip'
-
-ActiveRecord::Base.establish_connection(
-  :adapter => 'sqlite3',
-  :database => 'soup_development.db'
-)
 
 module Vanilla
   def self.present(params, snip_name, part=nil)
