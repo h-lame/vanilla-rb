@@ -38,6 +38,8 @@ $ ruby vanilla/snips_on_sinatra.rb
 
 ... the wonki starts. THE PAIN BEGINS.
 
+[$ gem install rack; rackup vanilla/vanilla.ru # also works.]
+
 
 Usage
 =====
