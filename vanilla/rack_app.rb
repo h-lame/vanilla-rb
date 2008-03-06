@@ -1,5 +1,9 @@
 require 'vanilla'
 
+gem 'rack'
+require 'rack'
+
+
 module Vanilla
   class RackApp
     URL_ROOT = /\A\/\Z/

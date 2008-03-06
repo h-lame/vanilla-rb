@@ -1,4 +1,12 @@
 require 'rubygems'
+
+# In case we haven't upgraded Rubygems yet
+unless Kernel.respond_to?(:gem)
+  def gem(*args)
+    require_gem(*args)
+  end
+end
+
 gem 'soup', '>= 0.1.2'
 require 'soup'
 
