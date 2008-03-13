@@ -17,5 +17,5 @@ if __FILE__ == $0
   
   load File.join(File.dirname(__FILE__), *%w[test_snips.rb])
   
-  puts "Loaded #{Tuple.count} tuples"
+  puts "Loaded #{Soup.tuple_class.count} tuples"
 end
