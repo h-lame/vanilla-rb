@@ -7,7 +7,7 @@ unless Kernel.respond_to?(:gem)
   end
 end
 
-gem 'soup', '>= 0.1.2'
+gem 'soup', '>= 0.1.4'
 require 'soup'
 
 require 'vanilla/routes'
