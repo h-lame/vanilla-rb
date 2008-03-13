@@ -30,6 +30,8 @@ It was MESSED. UP.
 Thee Darke Invocation
 =====================
 
+$ gem install soup sqlite3-ruby
+
 $ ruby vanilla/bootstrap.rb
 
 ... a bunch of stuff gets created
