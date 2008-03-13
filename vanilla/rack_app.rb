@@ -50,7 +50,7 @@ module Vanilla
       end
     
       params = request.params.merge(:snip => snip, :part => part, :format => format)
-      rendered_output = Vanilla.present(params, snip, part)
+      rendered_output = Vanilla.present(params)
     
       [200, {"Content-Type" => "text/html"}, [rendered_output]]
     end
