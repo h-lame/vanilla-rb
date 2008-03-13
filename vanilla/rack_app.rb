@@ -6,53 +6,57 @@ require 'rack'
 
 module Vanilla
   class RackApp
-    URL_ROOT = /\A\/\Z/
-    URL_SNIP = /\A\/([\w\-]+)(\/|\.(\w+))?\Z/
-    URL_SNIP_AND_PART = /\A\/([\w\-]+)\/([\w\-]+)(\/|\.(\w+))?\Z/
-    
+    # Create a request with indifferent-hash-style access to the params
     class Request < Rack::Request
       def params
-        original_params = super
-        original_params.inject({}) do |symbolized_params, (key,value)|
-          symbolized_params[key.to_sym] = value
-          symbolized_params
-        end
+        # Don't you just love how terse functional programming tends to look like maths?
+        @indifferent_params ||= super.inject({}) { |p, (k,v)| p[k.to_sym] = v; p }
       end
     end
     
+    # Create a new Vanilla Rack Application.
+    # Set the dreamhost_fix parameter to true to get the request path from the SCRIPT_URL
+    # environment variable, rather than the request.path_info method.
     def initialize(dreamhost_fix=false)
       Soup.prepare
       @dreamhost_fix = dreamhost_fix
     end
     
+    # The call method required by all good Rack applications
     def call(env)
-      request = Request.new(env)
-      
-      # TODO: this is ugly, but cgi on dreamhost doesn't give anything in path_info
-      uri_path = @dreamhost_fix ? env["SCRIPT_URL"] : request.path_info
-
-      # TODO: there must be a better way to get the routing done
-      case uri_path
-      when URL_ROOT
-        snip = 'start'
-        format = 'html'
-        part = nil
-      when URL_SNIP
-        snip = $1
-        format = $3
-        part = nil
-      when URL_SNIP_AND_PART
-        snip = $1
-        part = $2
-        format = $4
+      request = Request.new(env)      
+      snip, part, format = request_uri_parts(request)
+      if snip
+        params = request.params.merge(:snip => snip, :part => part, :format => format)
+        [200, {"Content-Type" => "text/html"}, [Vanilla.present(params)]]
       else
-        return [404, {"Content-Type" => "text/html"}, ["Couldn't match path '#{request.path_info}'"]]
+        [404, {"Content-Type" => "text/html"}, ["Couldn't match path '#{request.path_info}'"]]
       end
+    end
     
-      params = request.params.merge(:snip => snip, :part => part, :format => format)
-      rendered_output = Vanilla.present(params)
+    private
     
-      [200, {"Content-Type" => "text/html"}, [rendered_output]]
+    # TODO: this is ugly, but cgi on dreamhost doesn't give anything in path_info
+    def uri_path(request)
+      @dreamhost_fix ? env["SCRIPT_URL"] : request.path_info
+    end
+    
+    URL_ROOT          = /\A\/\Z/                                  # i.e. /
+    URL_SNIP          = /\A\/([\w\-]+)(\/|\.(\w+))?\Z/            # i.e. /start, /start.html
+    URL_SNIP_AND_PART = /\A\/([\w\-]+)\/([\w\-]+)(\/|\.(\w+))?\Z/ # i.e. /blah/part, /blah/part.raw
+    
+    # Returns an array of the requested snip, part and format
+    def request_uri_parts(request)
+      case uri_path(request)
+      when URL_ROOT
+        ['start', nil, 'html']
+      when URL_SNIP
+        [$1, nil, $3]
+      when URL_SNIP_AND_PART
+        [$1, $2, $4]
+      else
+        []
+      end
     end
   end
 end
