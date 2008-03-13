@@ -12,7 +12,7 @@ require 'soup'
 
 require 'vanilla/routes'
 require 'vanilla/render'
-require 'vanilla/dynasnip'
+require 'vanilla/dynasnips'
 
 module Vanilla
   # Expects params to include

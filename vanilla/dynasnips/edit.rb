@@ -1,13 +1,6 @@
 # The edit dyna will load the snip given in the 'snip_to_edit' part of the
 # params
-dynasnip "edit", %{
-  class EditSnip < Dynasnip
-    def handle(*args)
-      prevent_snip_inclusion(Vanilla::Render.render_without_including_snips('edit', :template, [], context, Vanilla::Render::Erb))
-    end
-  end
-  EditSnip
-}, :template => %{
+dynasnip "edit", "EditSnip", :template => %{
   <form action="<%= Vanilla::Routes.url_to "save" %>">
   <dl class="attributes">
     <% snip_to_edit = Snip[context[:snip_to_edit]] %>
