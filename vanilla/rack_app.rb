@@ -30,7 +30,8 @@ module Vanilla
         params = request.params.merge(:snip => snip, :part => part, :format => format)
         [200, {"Content-Type" => "text/html"}, [Vanilla.present(params)]]
       else
-        [404, {"Content-Type" => "text/html"}, ["Couldn't match path '#{request.path_info}'"]]
+        four_oh_four = Vanilla.present(:snip => 'system', :part => 'four_oh_four', :format => 'html')
+        [404, {"Content-Type" => "text/html"}, [four_oh_four]]
       end
     end
     

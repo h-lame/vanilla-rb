@@ -23,6 +23,12 @@ system.main_template = <<-HTML
 </html>
 HTML
 
+system.four_oh_four = <<-HTML
+<h1>DANG IT!</h1>
+<p>That is too bad. DANG that smarts bad. I couldn't load your request. Was it malformed?</p>
+<p>Maybe you should go <a href="/">home</a>.</p>
+HTML
+
 system.css = <<-CSS
 body {
   font-family: Helvetica;
