@@ -1,10 +1,6 @@
 require 'rubygems'
 require 'soup'
 
-def debug(str)
-  # puts(str)
-end
-
 module Vanilla
   module Render
     def self.renderer_for(snip)
@@ -23,7 +19,6 @@ module Vanilla
       end
     rescue Exception => e
       "<pre>[Error rendering '#{snip_name}' - \"" + e.message + "\"]</pre>"
-      # ": #{snip_name}\nBacktrace:\n#{e.backtrace.join('\n')}]</pre>" # this seems to produce a confusing backtick for Markdown.
     end
   
     # render a snip using either the renderer given, or the renderer
@@ -49,7 +44,6 @@ module Vanilla
         @snip = snip
         @part = snip_part
         @args = args
-        debug "[#{self.object_id}] #{self.class.name}.new(#{snip.inspect}, #{snip_part.inspect}, #{args.inspect}, #{context.inspect})"
       end
     
       # Handles processing the text of the content. Subclasses should
@@ -76,12 +70,7 @@ module Vanilla
         end
       end
     
-      def prevent_snip_inclusion(content)
-        content.gsub("{", "&#123;").gsub("}" ,"&#125;")
-      end
-    
       def render_without_including_snips
-        debug "[#{self.object_id}] rendering #{@snip.name} without including snips"
         process_text(@snip, raw_content, @args)
       end
     
@@ -92,13 +81,8 @@ module Vanilla
     
       # Default rendering behaviour. Subclasses shouldn't really need to touch this.
       def render
-        debug "[#{self.object_id}] rendering #{@snip.name} including snips"
-        tmp = process_text(@snip, raw_content, @args) # include_snips(raw_content)
-        debug "---\n#{tmp}\n---\n"
-        tmp = include_snips(tmp) #process_text(@snip, tmp, @args)
-        debug "[#{self.object_id}] DONE rendering #{@snip.name} including snips"
-        debug "---\n#{tmp}\n---\n"
-        tmp
+        processed_text = process_text(@snip, raw_content, @args)
+        include_snips(processed_text)
       end
     end
   end

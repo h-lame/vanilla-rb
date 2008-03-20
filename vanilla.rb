@@ -22,14 +22,11 @@ module Vanilla
   def self.present(params)
     case params[:format]
     when 'html', nil
-      # render in main template
-      Vanilla::Render.render('system', :main_template, [], params, Vanilla::Render::Erb)
+      Render.render('system', :main_template, [], params, Render::Erb)
     when 'raw'
-      # Return the raw content of the snip (or snip part)
-      Vanilla::Render.render(params[:snip], params[:part] || :content, [], params, Vanilla::Render::Raw)
+      Render.render(params[:snip], params[:part] || :content, [], params, Render::Raw)
     when 'text'
-      # Render the content of this snip, but without recursing into other snips
-      Vanilla::Render.render_without_including_snips(params[:snip], params[:part] || :content, [], params)
+      Render.render_without_including_snips(params[:snip], params[:part] || :content, [], params)
     else
       "Unknown format '#{params[:format]}'"
     end
