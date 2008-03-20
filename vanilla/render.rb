@@ -7,12 +7,12 @@ module Vanilla
       snip.render_as ? const_get(snip.render_as) : nil
     end
   
-    def self.rendering(snip_name, snip_part=:content, args=[], context={}, renderer=nil)
+    def self.rendering(snip_name, snip_part=:content, context={}, args=[], renderer=nil)
       snip = Snip[snip_name]
       if snip
         new_renderer = renderer || renderer_for(snip) || Render::Base
         part_to_render = snip_part || :content
-        renderer_instance = new_renderer.new(snip, part_to_render, args, context)
+        renderer_instance = new_renderer.new(snip, part_to_render, context, args)
         yield renderer_instance
       else
         "[Snip does not exist: #{snip_name}]"
@@ -24,14 +24,14 @@ module Vanilla
     # render a snip using either the renderer given, or the renderer
     # specified by the snip's "render_as" property, or Render::Base
     # if nothing else is given.
-    def self.render(snip_name, snip_part=:content, args=[], context={}, renderer=nil)
-      rendering(snip_name, snip_part, args, context, renderer) do |r|
+    def self.render(snip_name, snip_part=:content, context={}, args=[], renderer=nil)
+      rendering(snip_name, snip_part, context, args, renderer) do |r|
         r.render
       end
     end
   
-    def self.render_without_including_snips(snip_name, snip_part=:content, args=[], context={}, renderer=nil)
-      rendering(snip_name, snip_part, args, context, renderer) do |r|
+    def self.render_without_including_snips(snip_name, snip_part=:content, context={}, args=[], renderer=nil)
+      rendering(snip_name, snip_part, context, args, renderer) do |r|
         r.render_without_including_snips
       end
     end
@@ -39,7 +39,7 @@ module Vanilla
     class Base
       attr_reader :context, :snip, :part, :args
     
-      def initialize(snip, snip_part=:content, args=[], context={})
+      def initialize(snip, snip_part=:content, context={}, args=[])
         @context = context
         @snip = snip
         @part = snip_part
@@ -66,7 +66,7 @@ module Vanilla
           snip_args = $3 ? $3.split(',') : []
           # Render the snip or snip part with the given args, and the current
           # context, but with the default renderer for that snip.
-          Render.render(snip_name, snip_attribute, snip_args, @context)
+          Render.render(snip_name, snip_attribute, @context, snip_args)
         end
       end
     

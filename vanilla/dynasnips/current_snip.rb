@@ -8,7 +8,7 @@ dynasnip "current_snip", %{
           context[:snip]
         end
       else
-        Vanilla::Render.render(context[:snip], context[:part], args, context)
+        Render.render(context[:snip], context[:part], context, args)
       end
     end
     

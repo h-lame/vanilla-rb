@@ -22,11 +22,11 @@ module Vanilla
   def self.present(params)
     case params[:format]
     when 'html', nil
-      Render.render('system', :main_template, [], params, Render::Erb)
+      Render.render('system', :main_template, params, [], Render::Erb)
     when 'raw'
-      Render.render(params[:snip], params[:part] || :content, [], params, Render::Raw)
+      Render.render(params[:snip], params[:part] || :content, params, [], Render::Raw)
     when 'text'
-      Render.render_without_including_snips(params[:snip], params[:part] || :content, [], params)
+      Render.render_without_including_snips(params[:snip], params[:part] || :content, params, [])
     else
       "Unknown format '#{params[:format]}'"
     end

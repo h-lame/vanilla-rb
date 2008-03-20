@@ -13,7 +13,7 @@ module Vanilla::Render
     def process_text(snip, content, args)
       handler_klass = eval(content, binding, snip.name)
       instance = if handler_klass.ancestors.include?(Vanilla::Render::Base)
-        handler_klass.new(snip, nil, args, context)
+        handler_klass.new(snip, nil, context, args)
       else
         handler_klass.new
       end
