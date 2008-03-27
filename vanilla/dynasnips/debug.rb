@@ -5,5 +5,8 @@ class Debug < Dynasnip
   def get(*args)
     context.inspect
   end
+  def post(*args)
+    "You posted! " + context.inspect
+  end
 end
 Debug}
