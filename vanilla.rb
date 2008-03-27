@@ -18,6 +18,8 @@ module Vanilla
   # Expects params to include
   #   :snip => the name of the snip [REQUIRED]
   #   :part => the part of the snip to show [OPTIONAL]
+  #   :format => the format to render [OPTIONAL]
+  #   :method => GET/POST/DELETE/PUT [OPTIONAL]
   #
   def self.present(params)
     case params[:format]

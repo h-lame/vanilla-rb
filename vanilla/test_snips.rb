@@ -77,7 +77,7 @@ textile.save
 
 dynasnip "bad_dynasnip", %{
 class BadDynasnip
-  def handle(*args)
+  def get(*args)
     raise "Oh no"
   end
 end

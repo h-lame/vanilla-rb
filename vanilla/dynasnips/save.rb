@@ -1,6 +1,6 @@
 dynasnip "save", <<-EOF
 class Save < Dynasnip
-  def handle(*args)
+  def get(*args)
     snip_attributes = context.dup
     snip_attributes.delete(:save_button)
     snip_attributes.delete(:snip)

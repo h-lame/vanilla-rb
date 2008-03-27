@@ -27,7 +27,8 @@ module Vanilla
       request = Request.new(env)      
       snip, part, format = request_uri_parts(request)
       if snip
-        params = request.params.merge(:snip => snip, :part => part, :format => format)
+        params = request.params.merge(:snip => snip, :part => part, 
+                                      :format => format, :method => request.request_method.downcase)
         [200, {"Content-Type" => "text/html"}, [Vanilla.present(params)]]
       else
         four_oh_four = Vanilla.present(:snip => 'system', :part => 'four_oh_four', :format => 'html')

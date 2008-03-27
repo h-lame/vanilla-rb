@@ -1,6 +1,6 @@
 dynasnip "url_to", %{
   class UrlTo
-    def handle(snip_name)
+    def get(snip_name)
       if Snip[snip_name]
         Vanilla::Routes.url_to(snip_name)
       else

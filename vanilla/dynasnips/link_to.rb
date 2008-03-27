@@ -1,6 +1,6 @@
 dynasnip "link_to", %{
 class Linker
-  def handle(snip_name)
+  def get(snip_name)
     if Snip[snip_name]
       Vanilla::Routes.link_to(snip_name)
     else

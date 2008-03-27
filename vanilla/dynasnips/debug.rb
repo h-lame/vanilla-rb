@@ -2,7 +2,7 @@
 # (or whatever - access to some object outside of the snip itself.)
 dynasnip "debug", %{
 class Debug < Dynasnip
-  def handle(*args)
+  def get(*args)
     context.inspect
   end
 end
