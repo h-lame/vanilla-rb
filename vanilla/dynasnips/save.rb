@@ -1,10 +1,8 @@
 dynasnip "save", <<-EOF
 class Save < Dynasnip
   def get(*args)
-    snip_attributes = context.dup
+    snip_attributes = cleaned_params
     snip_attributes.delete(:save_button)
-    snip_attributes.delete(:snip)
-    snip_attributes.delete(:format)
     
     return 'no params' if snip_attributes.empty?
     snip = Snip[snip_attributes[:name]]
