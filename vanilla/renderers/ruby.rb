@@ -23,7 +23,7 @@ module Vanilla::Render
       if context[:method] && instance.respond_to?(context[:method])
         instance.send(context[:method], *args).to_s
       else
-        instance_method.handle(*args).to_s
+        instance.handle(*args).to_s
       end
     end
   end
