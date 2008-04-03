@@ -27,10 +27,12 @@ module Vanilla
       request = Request.new(env)      
       snip, part, format = request_uri_parts(request)
       if snip
-        params = request.params.merge(:snip => snip, :part => part, :format => format)
+        params = request.params.merge(:snip => snip, :part => part, 
+                                      :format => format, :method => request.request_method.downcase)
         [200, {"Content-Type" => "text/html"}, [Vanilla.present(params)]]
       else
-        [404, {"Content-Type" => "text/html"}, ["Couldn't match path '#{request.path_info}'"]]
+        four_oh_four = Vanilla.present(:snip => 'system', :part => 'four_oh_four', :format => 'html')
+        [404, {"Content-Type" => "text/html"}, [four_oh_four]]
       end
     end
     
@@ -42,12 +44,12 @@ module Vanilla
     end
     
     URL_ROOT          = /\A\/\Z/                                  # i.e. /
-    URL_SNIP          = /\A\/([\w\-]+)(\/|\.(\w+))?\Z/            # i.e. /start, /start.html
-    URL_SNIP_AND_PART = /\A\/([\w\-]+)\/([\w\-]+)(\/|\.(\w+))?\Z/ # i.e. /blah/part, /blah/part.raw
+    URL_SNIP          = /\A\/([\w\-\s]+)(\/|\.(\w+))?\Z/            # i.e. /start, /start.html
+    URL_SNIP_AND_PART = /\A\/([\w\-\s]+)\/([\w\-\s]+)(\/|\.(\w+))?\Z/ # i.e. /blah/part, /blah/part.raw
     
     # Returns an array of the requested snip, part and format
     def request_uri_parts(request)
-      case uri_path(request)
+      case CGI.unescape(uri_path(request))
       when URL_ROOT
         ['start', nil, 'html']
       when URL_SNIP

@@ -1,5 +1,6 @@
 require 'vanilla/dynasnip'
 
+<<<<<<< HEAD:vanilla/dynasnips.rb
 module Vanilla
   module Dynasnips
     class NewSnip < Dynasnip
@@ -102,3 +103,8 @@ module Vanilla
 end
 
 include Vanilla::Dynasnips # TODO: get the Ruby renderer to eval in this module's namespace
+=======
+Dir[File.join(File.dirname(__FILE__), 'dynasnips', '*.rb')].each do |dynasnip|
+  load dynasnip
+end
+>>>>>>> cfd4a1d9985a36778c4549e6acd79b80856fb522:vanilla/dynasnips.rb
