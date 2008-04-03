@@ -10,7 +10,7 @@ module Vanilla
     class Request < Rack::Request
       def params
         # Don't you just love how terse functional programming tends to look like maths?
-        @indifferent_params ||= super.inject({}) { |p, (k,v)| p[k.to_sym] = v; p }
+        @symbolised_params ||= super.inject({}) { |p, (k,v)| p[k.to_sym] = v; p }
       end
     end
     
