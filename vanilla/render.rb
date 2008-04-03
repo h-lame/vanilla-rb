@@ -39,5 +39,4 @@ module Vanilla
 end
 
 # Load all the other renderer subclasses
-require 'vanilla/renderers/base'
 Dir[File.join(File.dirname(__FILE__), 'renderers', '*.rb')].each { |f| require f }
