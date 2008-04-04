@@ -10,6 +10,9 @@ module Vanilla
         new(snip, snip_part, context, args).render
       end
       
+      def self.escape_curly_braces(str)
+        str.gsub("{", "&#123;").gsub("}", "&#125;")
+      end
       
       attr_reader :context, :snip, :part, :args
     
