@@ -24,7 +24,6 @@ describe Vanilla, "when presenting as HTML" do
     params = {:snip => 'test', :part => 'part'}
     Vanilla.present(params).should == "<tag>part content</tag>"
   end
-  
 end
 
 describe Vanilla, "when presenting content as text" do
