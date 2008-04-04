@@ -67,7 +67,9 @@ module Vanilla
       "[Snip '#{snip_name}' does not exist]"
     end
   rescue Exception => e
-    "<pre>[Error rendering '#{snip_name}' - \"" + e.message + "\"]\n" + e.backtrace.join("\n") + "</pre>"
+    "<pre>[Error rendering '#{snip_name}' - \"" + 
+      e.message.gsub("<", "&lt;").gsub(">", "&gt;") + "\"]\n" + 
+      e.backtrace.join("\n").gsub("<", "&lt;").gsub(">", "&gt;") + "</pre>"
   end
 end
 
