@@ -1,8 +1,9 @@
-dynasnip "new", %{
+require 'vanilla/dynasnip'
+
 class NewSnip < Dynasnip
-  def get(*arg)
-    Render.render('edit', :template, context.merge(:snip_to_edit => 'blank'), [], Render::Erb)
+  snip_name :new
+  
+  def handle(*arg)
+    Vanilla.render('edit', :template, context.merge(:snip_to_edit => 'blank'), [], Vanilla::Renderers::Erb)
   end
 end
-NewSnip
-}

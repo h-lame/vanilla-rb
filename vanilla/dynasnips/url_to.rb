@@ -1,12 +1,7 @@
-dynasnip "url_to", %{
-  class UrlTo
-    def get(snip_name)
-      if Snip[snip_name]
-        Vanilla::Routes.url_to(snip_name)
-      else
-        "[Snip '\#{snip_name}' not found]"
-      end
-    end
+require 'vanilla/dynasnip'
+
+class UrlTo < Dynasnip
+  def handle(snip_name)
+    Snip[snip_name] ? Vanilla::Routes.url_to(snip_name) : "[Snip '#{snip_name}' not found]"
   end
-  UrlTo  
-}
+end

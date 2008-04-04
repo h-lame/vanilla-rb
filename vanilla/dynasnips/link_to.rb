@@ -1,11 +1,7 @@
-dynasnip "link_to", %{
-class Linker
-  def get(snip_name)
-    if Snip[snip_name]
-      Vanilla::Routes.link_to(snip_name)
-    else
-      Vanilla::Routes.new_link(snip_name)
-    end
+require 'vanilla/dynasnip'
+
+class LinkTo < Dynasnip
+  def handle(snip_name)
+    Snip[snip_name] ? Vanilla::Routes.link_to(snip_name) : Vanilla::Routes.new_link(snip_name)
   end
 end
-Linker}

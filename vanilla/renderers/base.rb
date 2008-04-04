@@ -1,6 +1,11 @@
 module Vanilla
-  module Render
+  module Renderers
     class Base
+      def self.render(snip_name, snip_part=:content, context={}, args=[])
+        snip = Snip[snip_name]
+        new(snip, snip_part, context, args).render
+      end
+      
       attr_reader :context, :snip, :part, :args
     
       def initialize(snip, snip_part=:content, context={}, args=[])
@@ -17,20 +22,22 @@ module Vanilla
         content
       end
     
-      SNIP_REGEXP = re = %r{ \{
-        ([\w\-]+) (?: \.([\w\-]+) )?
-        (?: \s+ ([\w\-,]+) )?
-      \} }x
+      def self.snip_regexp
+        %r{ \{
+          ([\w\-]+) (?: \.([\w\-]+) )?
+          (?: \s+ ([\w\-,]+) )?
+        \} }x
+      end
     
       # Default behaviour to include a snip's content
       def include_snips(content)
-        content.gsub(SNIP_REGEXP) do
+        content.gsub(Vanilla::Renderers::Base.snip_regexp) do
           snip_name = $1
           snip_attribute = $2
           snip_args = $3 ? $3.split(',') : []
           # Render the snip or snip part with the given args, and the current
           # context, but with the default renderer for that snip.
-          Render.render(snip_name, snip_attribute, @context, snip_args)
+          Vanilla.render(snip_name, snip_attribute, @context, snip_args)
         end
       end
     
