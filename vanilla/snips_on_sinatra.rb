@@ -2,10 +2,6 @@ require 'rubygems'
 require 'sinatra'
 require 'vanilla'
 
-# TODO: delete this?
-require 'erb'
-include ERB::Util
-
 Sinatra::StaticEvent::MIME_TYPES.merge!({'' => 'text/plain'})
 Sinatra::StaticEvent::MIME_TYPES.merge!({'js' => 'text/javascript'})
 
