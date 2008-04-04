@@ -30,13 +30,32 @@ module Vanilla
       "Unknown format '#{params[:format]}'"
     end
   end
+
+  # render a snip using either the renderer given, or the renderer
+  # specified by the snip's "render_as" property, or Render::Base
+  # if nothing else is given.
+  def self.render(snip_name, snip_part=:content, context={}, args=[], renderer=nil)
+    rendering(snip_name, snip_part, context, args, renderer) do |r|
+      r.render
+    end
+  end
+  
+  # Render a snip using its given renderer, but do not perform any snip
+  # inclusion. I.e., ignore {snip arg} blocks of text in the snip content.
+  def self.render_without_including_snips(snip_name, snip_part=:content, context={}, args=[], renderer=nil)
+    rendering(snip_name, snip_part, context, args, renderer) do |r|
+      r.render_without_including_snips
+    end
+  end
   
   # Returns the renderer class for a given snip
   def self.renderer_for(snip)
     return Renderers::Base unless snip.render_as
     Vanilla::Renderers.const_get(snip.render_as)
   end
-
+  
+  # Given the snip and parameters, yield the appropriate Vanilla::Render::Base subclass
+  # instance
   def self.rendering(snip_name, snip_part=:content, context={}, args=[], renderer=nil)
     snip = Snip[snip_name]
     if snip
@@ -49,21 +68,6 @@ module Vanilla
     end
   rescue Exception => e
     "<pre>[Error rendering '#{snip_name}' - \"" + e.message + "\"]\n" + e.backtrace.join("\n") + "</pre>"
-  end
-
-  # render a snip using either the renderer given, or the renderer
-  # specified by the snip's "render_as" property, or Render::Base
-  # if nothing else is given.
-  def self.render(snip_name, snip_part=:content, context={}, args=[], renderer=nil)
-    rendering(snip_name, snip_part, context, args, renderer) do |r|
-      r.render
-    end
-  end
-
-  def self.render_without_including_snips(snip_name, snip_part=:content, context={}, args=[], renderer=nil)
-    rendering(snip_name, snip_part, context, args, renderer) do |r|
-      r.render_without_including_snips
-    end
   end
 end
 
