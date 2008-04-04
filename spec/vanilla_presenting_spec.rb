@@ -10,17 +10,17 @@ describe Vanilla, "when presenting as HTML" do
     create_snip :name => "other_snip", :content => "blah!"
   end
   
-  it "should render the system template if no format is given" do
+  it "should render the snip's content in the system template if no format or part is given" do
     params = {:snip => 'test'}
     Vanilla.present(params).should == "<tag>blah blah!</tag>"
   end
   
-  it "should render the system template if the HTML format is given" do
+  it "should render the snip's content in the system template if the HTML format is given" do
     params = {:snip => 'test', :format => "html"}
     Vanilla.present(params).should == "<tag>blah blah!</tag>"
   end
   
-  it "should render the requested part within the main template" do
+  it "should render the requested part within the main template when a part is given" do
     params = {:snip => 'test', :part => 'part'}
     Vanilla.present(params).should == "<tag>part content</tag>"
   end
@@ -33,12 +33,12 @@ describe Vanilla, "when presenting content as text" do
     create_snip :name => "other_snip", :content => "blah!"
   end
   
-  it "should render the snip outside of the main template with its default renderer" do
+  it "should render the snip's content outside of the main template with its default renderer" do
     params = {:snip => 'test', :format => "text"}
     Vanilla.present(params).should == "blah blah!"
   end
   
-  it "should render the snip part outside the main template" do
+  it "should render the snip part outside the main template when a format is given" do
     params = {:snip => 'test', :part => "part", :format => "text"}
     Vanilla.present(params).should == "part content"
   end
@@ -83,5 +83,11 @@ describe Vanilla, "when presenting nested snips with several renderers" do
   
   it "should use the renderer specified by each snip" do
     Vanilla.present(:snip => "test", :format => "text").should == "<p><em>blah <b>blah!</b></em></p>"
+  end
+end
+
+describe Vanilla, "when asked to present in an unknown format" do
+  it "should return an error message" do
+    Vanilla.present(:snip => "test", :format => "hairy").should == "Unknown format 'hairy'"
   end
 end
