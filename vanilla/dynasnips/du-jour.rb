@@ -1,3 +1,5 @@
+require 'vanilla/dynasnip'
+
 dynasnip "du-jour", %{
 class DuJour < Dynasnip
   def handle(*args)

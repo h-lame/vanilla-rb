@@ -1,10 +1,12 @@
+require 'vanilla/dynasnip'
+
 # The edit dyna will load the snip given in the 'snip_to_edit' part of the
 # params
 class EditSnip < Dynasnip
   snip_name "edit"
   
   def get(*args)
-    snip_in_edit_template = Render.render_without_including_snips('edit', :template, context, [], Render::Erb)
+    snip_in_edit_template = Vanilla.render_without_including_snips('edit', :template, context, [], Vanilla::Renderers::Erb)
     prevent_snip_inclusion(snip_in_edit_template)
   end
   

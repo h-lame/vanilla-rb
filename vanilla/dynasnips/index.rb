@@ -1,3 +1,5 @@
+require 'vanilla/dynasnip'
+
 class Index < Dynasnip
   def get(*args)
     # TODO: figure out a way around calling Soup/AR methods directly.

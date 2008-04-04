@@ -2,6 +2,7 @@ require 'rubygems'
 require 'sinatra'
 require 'vanilla'
 
+# TODO: delete this?
 require 'erb'
 include ERB::Util
 

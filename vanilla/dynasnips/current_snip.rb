@@ -1,3 +1,5 @@
+require 'vanilla/dynasnip'
+
 class CurrentSnip < Dynasnip
   def handle(*args)
     if args[0] == 'name'
@@ -7,7 +9,7 @@ class CurrentSnip < Dynasnip
         context[:snip]
       end
     else
-      Vanilla::Render.render(context[:snip], context[:part], context, args)
+      Vanilla.render(context[:snip], context[:part], context, args)
     end
   end
 end

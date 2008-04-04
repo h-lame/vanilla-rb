@@ -1,6 +1,6 @@
-require 'vanilla/render'
+require 'vanilla/renderers/base'
 
-module Vanilla::Render
+module Vanilla::Renderers
   class Raw < Base
     def render
       raw_content

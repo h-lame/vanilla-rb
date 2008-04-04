@@ -1,6 +1,6 @@
-require 'vanilla/render'
+require 'vanilla/renderers/base'
 
-module Vanilla::Render
+module Vanilla::Renderers
   # Snips that render_as "Ruby" should define a class.
   # The class should have instance methods for any HTTP request methods that the dynasnip
   # should respond to, i.e. get(), post(), and so on.
@@ -15,7 +15,7 @@ module Vanilla::Render
   class Ruby < Base
     def process_text(snip, content, args)
       handler_klass = eval(content, binding, snip.name)
-      instance = if handler_klass.ancestors.include?(Vanilla::Render::Base)
+      instance = if handler_klass.ancestors.include?(Vanilla::Renderers::Base)
         handler_klass.new(snip, nil, context, args)
       else
         handler_klass.new

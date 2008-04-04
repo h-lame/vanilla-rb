@@ -1,3 +1,5 @@
+require 'vanilla/dynasnip'
+
 class LinkToCurrentSnip < Dynasnip
   def handle(*args)
     if context[:snip] == 'edit' # we're editing so don't use this name

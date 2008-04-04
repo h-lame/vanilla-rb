@@ -1,3 +1,5 @@
+require 'vanilla/dynasnip'
+
 class Notes < Dynasnip
   def get(*args)
     all_notes_content = all_notes(true).map { |snip| render_note(snip) }.join("")

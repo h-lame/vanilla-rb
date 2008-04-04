@@ -1,3 +1,5 @@
+require 'vanilla/dynasnip'
+
 class RandomNumber < Dynasnip
   snip_name "rand"
   

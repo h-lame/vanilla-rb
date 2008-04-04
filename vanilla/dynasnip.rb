@@ -1,9 +1,9 @@
-require 'vanilla/render'
+require 'vanilla/renderers/base'
 require 'enumerator'
 
-class Dynasnip < Vanilla::Render::Base
+class Dynasnip < Vanilla::Renderers::Base
   # This lets dynasnips refer to Render.render, rather than Vanilla::Render.render
-  include Vanilla
+  #include Vanilla
   
   def self.all
     ObjectSpace.enum_for(:each_object, class << self; self; end).to_a - [self]
