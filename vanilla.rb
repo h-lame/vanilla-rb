@@ -45,7 +45,7 @@ module Vanilla
       renderer_instance = new_renderer.new(snip, part_to_render, context, args)
       yield renderer_instance
     else
-      "[Snip does not exist: #{snip_name}]"
+      "[Snip '#{snip_name}' does not exist]"
     end
   rescue Exception => e
     "<pre>[Error rendering '#{snip_name}' - \"" + e.message + "\"]\n" + e.backtrace.join("\n") + "</pre>"

@@ -37,12 +37,11 @@ end
 describe Vanilla, "when asked to present a snip that doesnt exist" do
   before(:each) do
     Vanilla::Test.setup_clean_environment
-    create_snip :name => "system", :main_template => "<tag>{current_snip}</tag>", :four_oh_four => "404!"
     create_snip :name => "current_snip", :content => "CurrentSnip", :render_as => "Ruby"
   end
   
   it "should render 404 content" do
-    Vanilla.present(:snip => "missing_snip").should == "<tag>404!</tag>"
+    Vanilla.present(:snip => "missing_snip", :format => "text").should == "[Snip 'missing_snip' does not exist]"
   end
 end
 
