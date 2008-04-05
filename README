@@ -32,7 +32,7 @@ Thee Darke Invocation
 
 $ gem install soup sqlite3-ruby
 
-$ ruby vanilla/bootstrap.rb
+$ rake bootstrap
 
 ... a bunch of stuff gets created
 
