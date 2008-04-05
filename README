@@ -30,17 +30,17 @@ It was MESSED. UP.
 Thee Darke Invocation
 =====================
 
-$ gem install soup sqlite3-ruby
+$ gem install soup sqlite3-ruby rack
 
 $ rake bootstrap
 
 ... a bunch of stuff gets created
 
-$ ruby vanilla/snips_on_sinatra.rb
+$ rackup vanilla/vanilla.ru
 
 ... the wonki starts. THE PAIN BEGINS.
 
-[$ gem install rack; rackup vanilla/vanilla.ru # also works.]
+[$ gem install sinatra; ruby vanilla/snips_on_sinatra.rb # also kinda works.]
 
 
 Usage
