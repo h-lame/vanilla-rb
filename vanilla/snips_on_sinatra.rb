@@ -20,13 +20,27 @@ Vanilla::Renderers::Base.class_eval {
   undef_method :delete if instance_methods.include? 'delete'
 }
 
+require 'vanilla/render_result'
+module Vanilla
+  class RenderResult
+    def to_sinatra_result
+      the_res = self
+      lambda do
+        status(the_res.result)
+        body(the_res.rendered_content)
+        headers({'Content-Type' => 'text/html'}.merge(the_res.meta))
+      end
+    end
+  end
+end
+
 get('/') { redirect Vanilla::Routes.url_to('start') }
 ['get', 'post', 'put', 'delete'].each do |method|
   send(method, '/:snip.:format') do
-    Vanilla.present sort_out_the_params_you_muppet(params, method)
+    self.instance_eval &Vanilla.present(sort_out_the_params_you_muppet(params, method)).to_sinatra_result
   end
   send(method, '/:snip/:part.:format') do
-    Vanilla.present sort_out_the_params_you_muppet(params, method)
+    self.instance_eval &Vanilla.present(sort_out_the_params_you_muppet(params, method)).to_sinatra_result
   end
 end
 

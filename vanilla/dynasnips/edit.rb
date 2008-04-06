@@ -6,7 +6,7 @@ class EditSnip < Dynasnip
   snip_name "edit"
   
   def get(*args)
-    snip_in_edit_template = Vanilla.render_without_including_snips('edit', :template, context, [], Vanilla::Renderers::Erb)
+    snip_in_edit_template = Vanilla.render_without_including_snips('edit', :template, context, [], render_result, Vanilla::Renderers::Erb).rendered_content
     prevent_snip_inclusion(snip_in_edit_template)
   end
   

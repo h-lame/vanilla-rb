@@ -3,6 +3,14 @@ require 'vanilla'
 gem 'rack'
 require 'rack'
 
+require 'vanilla/render_result'
+module Vanilla
+  class RenderResult
+    def to_rack_result
+      [result, {"Content-Type" => 'text/html'}.merge(meta), [rendered_content]]
+    end
+  end
+end
 
 module Vanilla
   class RackApp
@@ -29,10 +37,11 @@ module Vanilla
       if snip
         params = request.params.merge(:snip => snip, :part => part, 
                                       :format => format, :method => request.request_method.downcase)
-        [200, {"Content-Type" => "text/html"}, [Vanilla.present(params)]]
+        Vanilla.present(params).to_rack_result
       else
         four_oh_four = Vanilla.present(:snip => 'system', :part => 'four_oh_four', :format => 'html')
-        [404, {"Content-Type" => "text/html"}, [four_oh_four]]
+        four_oh_four.missing
+        four_oh_four.to_rack_result
       end
     end
     

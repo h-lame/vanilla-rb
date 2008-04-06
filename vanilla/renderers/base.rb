@@ -1,17 +1,18 @@
 module Vanilla
   module Renderers
     class Base
-      def self.render(snip_name, snip_part=:content, context={}, args=[])
+      def self.render(snip_name, snip_part=:content, context={}, args=[], render_result=Vanilla::RenderResult.new)
         snip = Snip[snip_name]
-        new(snip, snip_part, context, args).render
+        new(snip, snip_part, context, args, render_result).render
       end
       
-      attr_reader :context, :snip, :part, :args
+      attr_reader :context, :snip, :part, :args, :render_result
     
-      def initialize(snip, snip_part=:content, context={}, args=[])
+      def initialize(snip, snip_part=:content, context={}, args=[], render_result=Vanilla::RenderResult.new)
         @context = context
         @snip = snip
         @part = snip_part
+        @render_result = render_result
         @args = args
       end
     
@@ -37,7 +38,8 @@ module Vanilla
           snip_args = $3 ? $3.split(',') : []
           # Render the snip or snip part with the given args, and the current
           # context, but with the default renderer for that snip.
-          Vanilla.render(snip_name, snip_attribute, @context, snip_args)
+          # don't pass in the render_result, so we get a fresh one containing only the included snip
+          Vanilla.render(snip_name, snip_attribute, @context, snip_args).rendered_content
         end
       end
     

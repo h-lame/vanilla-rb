@@ -9,7 +9,9 @@ class CurrentSnip < Dynasnip
         context[:snip]
       end
     else
-      Vanilla.render(context[:snip], context[:part], context, args)
+      out = Vanilla.render(context[:snip], context[:part], context, args)
+      render_result.success unless out.is_failure?
+      out.rendered_content
     end
   end
 end
