@@ -34,7 +34,7 @@ class Notes < Dynasnip
 
   def render_note(snip)
     note_link = Vanilla::Routes.link_to(snip.name)
-    note_content = Render.render(snip.name, nil, context, [])
+    note_content = Vanilla.render(snip.name, nil, context, [])
     notes_snip.note_template.gsub('[note]', note_content).gsub('[link]', note_link)
   end
   
