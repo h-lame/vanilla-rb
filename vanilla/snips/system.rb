@@ -55,6 +55,10 @@ textarea {
   width: 100%;
 }
 
+textarea.content {
+  min-height: 10em;
+}
+
 pre {
   background-color: #f6f6f6;
   border: 1px solid #ccc;
