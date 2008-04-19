@@ -1,20 +1,6 @@
 require "spec_helper"
 require "vanilla"
 
-describe Vanilla, "when presenting raw content" do
-  before(:each) { Vanilla::Test.setup_clean_environment }
-  
-  it "should render the snips contents" do
-    create_snip(:name => 'test', :content => 'hello')
-    Vanilla.present(:format => 'raw', :snip => 'test').should == 'hello'
-  end
-  
-  it "should render a snips part if requested" do
-    create_snip(:name => 'test', :content => 'hello', :colour => 'red and black')
-    Vanilla.present(:format => 'raw', :snip => 'test', :part => 'colour').should == 'red and black'
-  end
-end
-
 describe Vanilla, "when detecting the snip renderer" do
   before(:each) { Vanilla::Test.setup_clean_environment }
 
@@ -41,15 +27,15 @@ describe Vanilla, "when detecting the snip renderer" do
     Vanilla.renderer_for(snip).should == MyRenderer      
   end
   
-  it "should be able to properly get namespaced constants" do
-    pending("this needs a loop to work") do
-      class ::MyRenderer
-        class Base
-        end
-      end
-      
-      snip = create_snip(:render_as => "MyRenderer::Base")
-      Vanilla.renderer_for(snip).should == MyRenderer::Base      
-    end
-  end
+  # it "should be able to properly get namespaced constants" do
+  #   pending("this needs string splitting and a loop to work; it's not really needed at the moment") do
+  #     class ::MyRenderer
+  #       class Base
+  #       end
+  #     end
+  #     
+  #     snip = create_snip(:render_as => "MyRenderer::Base")
+  #     Vanilla.renderer_for(snip).should == MyRenderer::Base      
+  #   end
+  # end
 end

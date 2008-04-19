@@ -6,7 +6,7 @@ Linking is good: {link_to bold}
 Here's a bold snip: {bold}
 
 - Here's a random number between 5 and 15: {rand 5,15}
-- Here's a random number between 90 and 100 (the default max): {rand 90}
+- Here's a random number between 1 and 90 (the default min): {rand 90}
 - Here's a random number between 1 and 100 (the default range): {rand}
 
 And lets include some textile: 

@@ -26,6 +26,10 @@ class Dynasnip < Vanilla::Renderers::Base
     @attributes[attribute_name.to_sym] = attribute_value
   end
   
+  def self.usage(str)
+    attribute :usage, escape_curly_braces(str).strip
+  end
+  
   def self.persist_all!
     all.each do |dynasnip|
       dynasnip.persist!
@@ -42,6 +46,22 @@ class Dynasnip < Vanilla::Renderers::Base
   # subclasses
   
   protected
+  
+  def snip_name
+    self.class.snip_name
+  end
+  
+  def snip
+    Snip[snip_name]
+  end
+  
+  def show_usage
+    if snip.usage
+      Vanilla::Renderers::Markdown.render(snip_name, :usage)
+    else
+      "No usage information for #{snip_name}"
+    end
+  end
   
   def cleaned_params
     p = context.dup

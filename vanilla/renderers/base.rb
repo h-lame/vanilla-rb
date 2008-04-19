@@ -1,9 +1,17 @@
 module Vanilla
   module Renderers
     class Base
+      
+      # This is synonymous to creating a new instance of the Renderer, and then
+      # passing it the same arguments (except the snip, rather than the snip name,
+      # is passed).
       def self.render(snip_name, snip_part=:content, context={}, args=[])
         snip = Snip[snip_name]
         new(snip, snip_part, context, args).render
+      end
+      
+      def self.escape_curly_braces(str)
+        str.gsub("{", "&#123;").gsub("}", "&#125;")
       end
       
       attr_reader :context, :snip, :part, :args
@@ -35,8 +43,10 @@ module Vanilla
           snip_name = $1
           snip_attribute = $2
           snip_args = $3 ? $3.split(',') : []
+          
           # Render the snip or snip part with the given args, and the current
-          # context, but with the default renderer for that snip.
+          # context, but with the default renderer for that snip. We dispatch
+          # *back* out to the root Vanilla.render method to do this.
           Vanilla.render(snip_name, snip_attribute, @context, snip_args)
         end
       end
@@ -44,7 +54,7 @@ module Vanilla
       def render_without_including_snips
         process_text(@snip, raw_content, @args)
       end
-    
+
       # Returns the raw content for the selected part of the selected snip
       def raw_content
         @snip.__send__(@part)      
