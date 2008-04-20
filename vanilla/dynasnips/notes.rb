@@ -2,8 +2,11 @@ require 'vanilla/dynasnip'
 
 class Notes < Dynasnip
   def get(*args)
-    all_notes_content = all_notes(true).map { |snip| render_note(snip) }.join("")
-    notes_snip.main_template.gsub('[notes]', all_notes_content)
+    all_notes_content = all_notes.map { |snip| 
+      render_note(snip) 
+    }.join("")
+    notes_snip.main_template.
+      gsub('[notes]', all_notes_content)
   end
 
   def post(*args)
@@ -21,9 +24,8 @@ class Notes < Dynasnip
     Snip['notes']
   end
   
-  def all_notes(reload=false)
-    @all_notes = nil if reload
-    @all_notes ||= Snip.with(:kind, "= 'note'")
+  def all_notes
+    Snip.with(:kind, "= 'note'")
   end
   
   def increment_next_id

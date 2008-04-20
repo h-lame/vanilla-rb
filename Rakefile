@@ -7,12 +7,11 @@ end
 
 task :clean do
   # TODO: get the database name from Soup
-  FileUtils.rm "soup.db"
+  FileUtils.rm "soup.db" if File.exist?("soup.db")
 end
 
 def load_snips(kind)
   Dir[File.join(File.dirname(__FILE__), 'vanilla', kind, '*.rb')].each do |f|
-    puts "loading #{f}"
     load f
   end
 end
@@ -27,7 +26,7 @@ task :bootstrap do
   
   load File.join(File.dirname(__FILE__), *%w[vanilla test_snips.rb])
   
-  puts "Loaded #{Soup.tuple_class.count} tuples"
+  puts "The soup is simmering. Loaded #{Soup.tuple_class.count} tuples"
 end
 
 require 'spec'

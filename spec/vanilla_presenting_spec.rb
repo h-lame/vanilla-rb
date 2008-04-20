@@ -1,7 +1,7 @@
 require "spec_helper"
 require "vanilla"
 
-describe Vanilla, "when presenting as HTML" do
+describe Vanilla::App, "when presenting as HTML" do
   before(:each) do 
     Vanilla::Test.setup_clean_environment
     create_snip :name => "system", :main_template => "<tag>{current_snip}</tag>"

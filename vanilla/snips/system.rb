@@ -38,7 +38,7 @@ body {
 }
 
 div#content {
-  width: 600px;
+  width: 800px;
   margin: 0 auto;
   background-color: #fff;
   padding: 1em;
