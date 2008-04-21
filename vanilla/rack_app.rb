@@ -1,4 +1,4 @@
-require 'vanilla'
+require 'vanilla/app'
 
 gem 'rack'
 require 'rack'

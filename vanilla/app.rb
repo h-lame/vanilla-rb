@@ -1,3 +1,5 @@
+require 'vanilla'
+
 module Vanilla
   class App
     
@@ -15,6 +17,7 @@ module Vanilla
     #   :method => GET/POST/DELETE/PUT [OPTIONAL]
     #
     def present
+      puts "presenting: #{request.format}"
       case request.format
       when 'html', nil
         render('system', :main_template, request.params, [], Renderers::Erb)
@@ -57,7 +60,8 @@ module Vanilla
       if snip
         new_renderer = renderer || renderer_for(snip)
         part_to_render = snip_part || :content
-        renderer_instance = new_renderer.new(snip, part_to_render, context, args)
+        puts "creating new #{new_renderer.name} for '#{snip_name}'"
+        renderer_instance = new_renderer.new(self, snip, part_to_render, context, args)
         yield renderer_instance
       else
         "[Snip '#{snip_name}' does not exist]"

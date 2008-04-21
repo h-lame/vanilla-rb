@@ -21,7 +21,8 @@ class CurrentSnip < Dynasnip
         context[:snip]
       end
     else
-      Vanilla.render(context[:snip], context[:part], context, args)
+      puts "rendering #{context.inspect}"
+      app.render(context[:snip], context[:part], context, args)
     end
   end
 end

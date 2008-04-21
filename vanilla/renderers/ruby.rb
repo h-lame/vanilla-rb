@@ -16,7 +16,8 @@ module Vanilla::Renderers
     def process_text(snip, content, args)
       handler_klass = eval(content, binding, snip.name)
       instance = if handler_klass.ancestors.include?(Vanilla::Renderers::Base)
-        handler_klass.new(snip, nil, context, args)
+        puts "creating new instance of #{handler_klass.name} with context: #{context.inspect}"
+        handler_klass.new(app, snip, nil, context, args)
       else
         handler_klass.new
       end

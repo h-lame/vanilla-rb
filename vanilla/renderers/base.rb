@@ -5,22 +5,27 @@ module Vanilla
       # This is synonymous to creating a new instance of the Renderer, and then
       # passing it the same arguments (except the snip, rather than the snip name,
       # is passed).
-      def self.render(snip_name, snip_part=:content, context={}, args=[])
+      def self.render(app, snip_name, snip_part=:content, context={}, args=[])
         snip = Snip[snip_name]
-        new(snip, snip_part, context, args).render
+        new(app, snip, snip_part, context, args).render
       end
       
       def self.escape_curly_braces(str)
         str.gsub("{", "&#123;").gsub("}", "&#125;")
       end
       
-      attr_reader :context, :snip, :part, :args
+      attr_reader :context, :snip, :part, :args, :app
     
-      def initialize(snip, snip_part=:content, context={}, args=[])
+      def initialize(app, snip, snip_part=:content, context={}, args=[])
+        @app = app
         @context = context
         @snip = snip
         @part = snip_part
         @args = args
+      end
+      
+      def request
+        app.request
       end
     
       # Handles processing the text of the content. Subclasses should
@@ -47,7 +52,7 @@ module Vanilla
           # Render the snip or snip part with the given args, and the current
           # context, but with the default renderer for that snip. We dispatch
           # *back* out to the root Vanilla.render method to do this.
-          Vanilla.render(snip_name, snip_attribute, @context, snip_args)
+          app.render(snip_name, snip_attribute, @context, snip_args)
         end
       end
     
