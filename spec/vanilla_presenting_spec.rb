@@ -1,5 +1,5 @@
 require "spec_helper"
-require "vanilla"
+require "vanilla/app"
 
 describe Vanilla::App, "when presenting as HTML" do
   before(:each) do 
@@ -11,20 +11,22 @@ describe Vanilla::App, "when presenting as HTML" do
   end
   
   it "should render the snip's content in the system template if no format or part is given" do
-    params = {:snip => 'test'}
-    Vanilla.present(params).should == "<tag>blah blah!</tag>"
+    request = mock_request("/test")
+    Vanilla::App.new(request).present.should == "<tag>blah blah!</tag>"
   end
   
-  it "should render the snip's content in the system template if the HTML format is given" do
-    params = {:snip => 'test', :format => "html"}
-    Vanilla.present(params).should == "<tag>blah blah!</tag>"
-  end
-  
-  it "should render the requested part within the main template when a part is given" do
-    params = {:snip => 'test', :part => 'part'}
-    Vanilla.present(params).should == "<tag>part content</tag>"
-  end
+  # it "should render the snip's content in the system template if the HTML format is given" do
+  #   request = mock_request("/test.html")
+  #   Vanilla.present(params).should == "<tag>blah blah!</tag>"
+  # end
+  # 
+  # it "should render the requested part within the main template when a part is given" do
+  #   request = mock_request("/test/part")
+  #   Vanilla.present(params).should == "<tag>part content</tag>"
+  # end
 end
+
+__END__
 
 describe Vanilla, "when presenting content as text" do
   before(:each) do 

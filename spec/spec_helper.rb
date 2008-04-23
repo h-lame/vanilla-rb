@@ -23,3 +23,9 @@ def create_snip(params)
   s.save
   s
 end
+
+require "rack/mock"
+
+def mock_request(url)
+  Vanilla::Request.new(Rack::Request.new(Rack::MockRequest.env_for(url)))
+end

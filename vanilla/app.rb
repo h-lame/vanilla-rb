@@ -1,4 +1,5 @@
 require 'vanilla'
+require 'vanilla/request'
 
 module Vanilla
   class App

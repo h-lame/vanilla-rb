@@ -7,8 +7,8 @@ describe Vanilla::Renderers::Erb, "when rendering" do
   end
 
   it "should insert evaluated Erb content into the snip" do
-    create_snip(:name => "test", :content => "<%= 1 + 2 %>")
-    Vanilla::Renderers::Erb.render('test').should == "3"
+    s = create_snip(:name => "test", :content => "<%= 1 + 2 %>")
+    Vanilla::Renderers::Erb.render(s).should == "3"
   end
   
   it "should evaluate Erb content in the snip" do
