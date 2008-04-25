@@ -4,7 +4,7 @@ module Vanilla
   # Create a request with symbolised access to the params, and some special
   # accessors to the snip, part and format based on our routing.
   class Request
-    attr_reader :snip, :part, :format
+    attr_reader :snip_name, :part, :format
     
     def initialize(rack_request, dreamhost_fix = false)
       @rack_request = rack_request
@@ -21,10 +21,14 @@ module Vanilla
       @rack_request.request_method.downcase
     end
     
+    def snip
+      Vanilla.snip(snip_name)
+    end
+    
     private
     
     def determine_request_uri_parts
-      @snip, @part, @format = request_uri_parts(@rack_request)
+      @snip_name, @part, @format = request_uri_parts(@rack_request)
       @format ||= 'html'
     end
     

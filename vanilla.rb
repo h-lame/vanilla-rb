@@ -11,7 +11,16 @@ gem 'soup', '>= 0.1.4'
 require 'soup'
 
 module Vanilla
-
+  class MissingSnipException < Exception
+  end
+  
+  def self.snip(name)
+    snip = Soup[name]
+    if snip.is_a?(Array) && snip.empty?
+      raise MissingSnipException, "can't find '#{name}'"
+    end
+    snip
+  end
 end
 
 def dynasnip(*args)

@@ -21,7 +21,7 @@ module Vanilla
       puts "presenting: #{request.format}"
       case request.format
       when 'html', nil
-        Renderers::Raw.new(self).render('system', :main_template)
+        Renderers::Erb.new(self).render(Vanilla.snip('system'), :main_template)
       when 'raw'
         Renderers::Raw.new(self).render(request.snip, request.part || :content)
       when 'text'
@@ -34,17 +34,17 @@ module Vanilla
     # render a snip using either the renderer given, or the renderer
     # specified by the snip's "render_as" property, or Render::Base
     # if nothing else is given.
-    def render(snip, part=:content)
+    def render(snip, part=:content, args=[])
       rendering(snip) do |r|
-        r.render(snip, part)
+        r.render(snip, part, args)
       end
     end
 
     # Render a snip using its given renderer, but do not perform any snip
     # inclusion. I.e., ignore {snip arg} blocks of text in the snip content.
-    def render_without_including_snips(snip, part=:content)
+    def render_without_including_snips(snip, part=:content, args=[])
       rendering(snip) do |r|
-        r.render_without_including_snips(snip, part)
+        r.render_without_including_snips(snip, part, args)
       end
     end
 
@@ -60,7 +60,7 @@ module Vanilla
       renderer_instance = renderer_for(snip).new(self)
       yield renderer_instance
     rescue Exception => e
-      "<pre>[Error rendering '#{snip.name}' - \"" + 
+      "<pre>[Error rendering '#{snip.inspect}' - \"" + 
         e.message.gsub("<", "&lt;").gsub(">", "&gt;") + "\"]\n" + 
         e.backtrace.join("\n").gsub("<", "&lt;").gsub(">", "&gt;") + "</pre>"
     end

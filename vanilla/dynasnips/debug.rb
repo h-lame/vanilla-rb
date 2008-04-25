@@ -4,10 +4,10 @@ require 'vanilla/dynasnip'
 # (or whatever - access to some object outside of the snip itself.)
 class Debug < Dynasnip
   def get(*args)
-    context.inspect
+    app.request.inspect
   end
   
   def post(*args)
-    "You posted! " + context.inspect
+    "You posted! " + app.request.inspect
   end
 end

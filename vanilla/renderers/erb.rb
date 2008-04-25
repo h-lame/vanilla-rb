@@ -5,10 +5,8 @@ include ERB::Util
 
 module Vanilla::Renderers
   class Erb < Base
-    def render(snip, part=:content) #, args=[])
-      @snip = snip # make the snip available to the context
-      processed_text = render_without_including_snips(snip, part) #, args)
-      include_snips(processed_text)
+    def prepare(snip, part=:content, args=[])
+      @snip = snip
     end
     
     def process_text(content)

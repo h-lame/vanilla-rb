@@ -39,7 +39,8 @@ class Dynasnip < Vanilla::Renderers::Base
   def self.persist!
     snip_attributes = {:name => snip_name, :content => self.name, :render_as => "Ruby"}
     snip_attributes.merge!(@attributes) if @attributes
-    Snip.new(snip_attributes).save
+    snip = Snip.new(snip_attributes).save
+    snip
   end
   
   # dynasnips gain access to the context in the same way as Render::Base

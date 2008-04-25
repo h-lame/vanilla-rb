@@ -7,10 +7,10 @@ class LinkToCurrentSnip < Dynasnip
   |
   
   def handle(*args)
-    if context[:snip] == 'edit' # we're editing so don't use this name
-      Vanilla::Routes.link_to context[:snip_to_edit]
+    if app.request.snip_name == 'edit' # we're editing so don't use this name
+      Vanilla::Routes.link_to app.request.params[:snip_to_edit]
     else
-      Vanilla::Routes.link_to context[:snip]
+      Vanilla::Routes.link_to app.request.snip_name
     end
   end    
 end

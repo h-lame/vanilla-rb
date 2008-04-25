@@ -34,4 +34,10 @@ describe Vanilla::Renderers::Base, "in general" do
     create_snip(:name => "another_snip", :content => "blah", :render_as => "Bold")
     @renderer.render(snip).gsub(/\s+/, ' ').should == "lets include <b>blah</b>"
   end
+  
+  it "should call prepare before rendering" do
+    snip = create_snip(:name => "test", :content => "some snip")
+    @renderer.should_receive(:prepare).with(snip, :content, [])
+    puts @renderer.render(snip)
+  end
 end

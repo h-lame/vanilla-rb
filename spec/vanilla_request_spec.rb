@@ -5,7 +5,12 @@ describe Vanilla::Request, "when requesting urls" do
   before(:each) { @request = mock_request("/snip") }
   
   it "should use the first segement as the snip name" do
-    @request.snip.should == "snip"
+    @request.snip_name.should == "snip"
+  end
+  
+  it "should try to load the snip based on the snip name" do
+    Vanilla.should_receive(:snip).with('snip').and_return(:snip)
+    @request.snip.should == :snip
   end
   
   it "should have no part if the url contains only a single segment" do
@@ -21,7 +26,7 @@ describe Vanilla::Request, "when requesting a snip part" do
   before(:each) { @request = mock_request("/snip/part") }
   
   it "should use the first segment as the snip, and the second segment as the part" do
-    @request.snip.should == "snip"
+    @request.snip_name.should == "snip"
     @request.part.should == "part"
   end
   
@@ -38,7 +43,7 @@ describe Vanilla::Request, "when requesting a snip with a format" do
   end
   
   it "should retain the filename part of the path as the snip" do
-    @request.snip.should == "snip"
+    @request.snip_name.should == "snip"
   end
 end
 
@@ -50,7 +55,7 @@ describe Vanilla::Request, "when requesting a snip part with a format" do
   end
   
   it "should retain the first segment of the path as the snip" do
-    @request.snip.should == "snip"
+    @request.snip_name.should == "snip"
   end
   
   it "should use the filename part of the second segment as the snip part" do

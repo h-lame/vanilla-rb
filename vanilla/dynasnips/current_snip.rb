@@ -15,14 +15,13 @@ class CurrentSnip < Dynasnip
   
   def handle(*args)
     if args[0] == 'name'
-      if context[:snip] == 'edit' # we're editing so don't use this name
-        context[:snip_to_edit]
+      if app.request.snip_name == 'edit' # we're editing so don't use this name
+        app.request.params[:snip_to_edit]
       else
-        context[:snip]
+        app.request.snip_name
       end
     else
-      puts "rendering #{context.inspect}"
-      app.render(context[:snip], context[:part], context, args)
+      app.render(Soup[app.request.snip_name])
     end
   end
 end
