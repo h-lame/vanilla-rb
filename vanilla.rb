@@ -21,6 +21,15 @@ module Vanilla
     end
     snip
   end
+  
+  def self.snip_exists?(name)
+    snip = Soup[name]
+    if snip.is_a?(Array) && snip.empty?
+      false
+    else
+      true
+    end
+  end
 end
 
 def dynasnip(*args)

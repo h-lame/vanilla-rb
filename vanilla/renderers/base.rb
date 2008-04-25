@@ -4,8 +4,7 @@ module Vanilla
   module Renderers
     class Base
       
-      # Render something. If a snip is given, the snip's 'content' part
-      # will be rendered.
+      # Render a snip.
       def self.render(snip, part=:content)
         new(app).render(snip, part)
       end
@@ -37,8 +36,12 @@ module Vanilla
           # Render the snip or snip part with the given args, and the current
           # context, but with the default renderer for that snip. We dispatch
           # *back* out to the root Vanilla.render method to do this.
-          snip = Soup[snip_name]
-          app.render(snip, snip_attribute, snip_args)
+          begin
+            snip = Vanilla.snip(snip_name)
+            app.render(snip, snip_attribute, snip_args)
+          rescue MissingSnipException
+            app.render_missing_snip(snip_name)
+          end
         end
       end
       

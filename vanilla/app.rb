@@ -60,9 +60,13 @@ module Vanilla
       renderer_instance = renderer_for(snip).new(self)
       yield renderer_instance
     rescue Exception => e
-      "<pre>[Error rendering '#{snip.inspect}' - \"" + 
+      "<pre>[Error rendering '#{snip.name}' - \"" + 
         e.message.gsub("<", "&lt;").gsub(">", "&gt;") + "\"]\n" + 
         e.backtrace.join("\n").gsub("<", "&lt;").gsub(">", "&gt;") + "</pre>"
+    end
+    
+    def render_missing_snip(snip_name)
+      "[snip '#{snip_name}' cannot be found]"
     end
     
   end

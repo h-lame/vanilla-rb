@@ -41,3 +41,16 @@ describe Vanilla::Renderers::Base, "in general" do
     puts @renderer.render(snip)
   end
 end
+
+describe Vanilla::Renderers::Base, "when trying to render a missing snip" do
+  before(:each) do
+    Vanilla::Test.setup_clean_environment
+    app = Vanilla::App.new(nil)
+    @renderer = Vanilla::Renderers::Base.new(app)
+    @snip = create_snip(:name => 'blah', :content => 'include a {missing_snip}')
+  end
+
+  it "should return a string describing the missing snip" do
+    @renderer.render(@snip).should == "include a [snip 'missing_snip' cannot be found]"
+  end
+end

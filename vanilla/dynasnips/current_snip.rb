@@ -21,7 +21,7 @@ class CurrentSnip < Dynasnip
         app.request.snip_name
       end
     else
-      app.render(Soup[app.request.snip_name])
+      app.render(app.request.snip)
     end
   end
 end
