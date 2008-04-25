@@ -4,21 +4,22 @@ require "vanilla/renderers/erb"
 describe Vanilla::Renderers::Erb, "when rendering" do
   before(:each) do
     Vanilla::Test.setup_clean_environment
+    @renderer = Vanilla::Renderers::Erb.new(Vanilla::App.new(nil))
   end
 
   it "should insert evaluated Erb content into the snip" do
     s = create_snip(:name => "test", :content => "<%= 1 + 2 %>")
-    Vanilla::Renderers::Erb.render(s).should == "3"
+    @renderer.render(s).should == "3"
   end
   
   it "should evaluate Erb content in the snip" do
-    create_snip(:name => "test", :content => "<% if false %>monkey<% else %>donkey<% end %>")
-    Vanilla::Renderers::Erb.render('test').should == "donkey"
+    s = create_snip(:name => "test", :content => "<% if false %>monkey<% else %>donkey<% end %>")
+    @renderer.render(s).should == "donkey"
   end
   
   it "should expose instance variables from within the renderer instance" do
-    create_snip(:name => "test", :content => "<%= @snip.name %>")
-    Vanilla::Renderers::Erb.render('test').should == "test"
+    s = create_snip(:name => "test", :content => "<%= @snip.name %>")
+    @renderer.render(s).should == "test"
   end
   
 end

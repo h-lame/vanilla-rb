@@ -21,11 +21,11 @@ module Vanilla
       puts "presenting: #{request.format}"
       case request.format
       when 'html', nil
-        render('system', :main_template, request.params, [], Renderers::Erb)
+        Renderers::Raw.new(self).render('system', :main_template)
       when 'raw'
-        render(request.snip, request.part || :content, request.params, [], Renderers::Raw)
+        Renderers::Raw.new(self).render(request.snip, request.part || :content)
       when 'text'
-        render(request.snip, request.part || :content, request.params, [])
+        render(request.snip, request.part || :content)
       else
         "Unknown format '#{request.format}'"
       end
@@ -34,17 +34,17 @@ module Vanilla
     # render a snip using either the renderer given, or the renderer
     # specified by the snip's "render_as" property, or Render::Base
     # if nothing else is given.
-    def render(snip_name, snip_part=:content, context={}, args=[], renderer=nil)
-      rendering(snip_name, snip_part, context, args, renderer) do |r|
-        r.render
+    def render(snip, part=:content)
+      rendering(snip) do |r|
+        r.render(snip, part)
       end
     end
 
     # Render a snip using its given renderer, but do not perform any snip
     # inclusion. I.e., ignore {snip arg} blocks of text in the snip content.
-    def render_without_including_snips(snip_name, snip_part=:content, context={}, args=[], renderer=nil)
-      rendering(snip_name, snip_part, context, args, renderer) do |r|
-        r.render_without_including_snips
+    def render_without_including_snips(snip, part=:content)
+      rendering(snip) do |r|
+        r.render_without_including_snips(snip, part)
       end
     end
 
@@ -56,19 +56,11 @@ module Vanilla
 
     # Given the snip and parameters, yield the appropriate Vanilla::Render::Base subclass
     # instance
-    def rendering(snip_name, snip_part=:content, context={}, args=[], renderer=nil)
-      snip = Snip[snip_name]
-      if snip
-        new_renderer = renderer || renderer_for(snip)
-        part_to_render = snip_part || :content
-        puts "creating new #{new_renderer.name} for '#{snip_name}'"
-        renderer_instance = new_renderer.new(self, snip, part_to_render, context, args)
-        yield renderer_instance
-      else
-        "[Snip '#{snip_name}' does not exist]"
-      end
+    def rendering(snip)
+      renderer_instance = renderer_for(snip).new(self)
+      yield renderer_instance
     rescue Exception => e
-      "<pre>[Error rendering '#{snip_name}' - \"" + 
+      "<pre>[Error rendering '#{snip.name}' - \"" + 
         e.message.gsub("<", "&lt;").gsub(">", "&gt;") + "\"]\n" + 
         e.backtrace.join("\n").gsub("<", "&lt;").gsub(">", "&gt;") + "</pre>"
     end

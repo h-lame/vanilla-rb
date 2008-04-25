@@ -1,37 +1,29 @@
+require 'vanilla/app'
+
 module Vanilla
   module Renderers
     class Base
       
-      # This is synonymous to creating a new instance of the Renderer, and then
-      # passing it the same arguments (except the snip, rather than the snip name,
-      # is passed).
-      def self.render(app, snip_name, snip_part=:content, context={}, args=[])
-        snip = Snip[snip_name]
-        new(app, snip, snip_part, context, args).render
+      # Render something. If a snip is given, the snip's 'content' part
+      # will be rendered.
+      def self.render(snip, part=:content) #, args=[])
+        new(app).render(snip, part) #, args)
       end
       
       def self.escape_curly_braces(str)
         str.gsub("{", "&#123;").gsub("}", "&#125;")
       end
       
-      attr_reader :context, :snip, :part, :args, :app
+      attr_reader :app
     
-      def initialize(app, snip, snip_part=:content, context={}, args=[])
+      def initialize(app)
         @app = app
-        @context = context
-        @snip = snip
-        @part = snip_part
-        @args = args
       end
       
-      def request
-        app.request
-      end
-    
       # Handles processing the text of the content. Subclasses should
       # override this method to do fancy text processing like markdown
       # or loading the content as Ruby code.
-      def process_text(snip, content, args)
+      def process_text(content) #, args)
         content
       end
     
@@ -52,22 +44,23 @@ module Vanilla
           # Render the snip or snip part with the given args, and the current
           # context, but with the default renderer for that snip. We dispatch
           # *back* out to the root Vanilla.render method to do this.
-          app.render(snip_name, snip_attribute, @context, snip_args)
+          snip = Snip[snip_name]
+          app.render(snip, snip_attribute) #, snip_args)
         end
       end
     
-      def render_without_including_snips
-        process_text(@snip, raw_content, @args)
+      def render_without_including_snips(snip, part=:content) #, args=[])
+        process_text(raw_content(snip, part)) #, args)
       end
 
       # Returns the raw content for the selected part of the selected snip
-      def raw_content
-        @snip.__send__(@part)      
+      def raw_content(snip, part)
+        snip.__send__((part || :content).to_sym)
       end
     
       # Default rendering behaviour. Subclasses shouldn't really need to touch this.
-      def render
-        processed_text = process_text(@snip, raw_content, @args)
+      def render(snip, part=:content) #, args=[])
+        processed_text = render_without_including_snips(snip, part) #, args)
         include_snips(processed_text)
       end
     end
