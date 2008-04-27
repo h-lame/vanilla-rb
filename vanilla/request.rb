@@ -4,7 +4,7 @@ module Vanilla
   # Create a request with symbolised access to the params, and some special
   # accessors to the snip, part and format based on our routing.
   class Request
-    attr_reader :snip_name, :part, :format
+    attr_reader :snip_name, :part, :format, :method
     
     def initialize(rack_request, dreamhost_fix = false)
       @rack_request = rack_request
@@ -17,10 +17,8 @@ module Vanilla
       @symbolised_params ||= @rack_request.params.inject({}) { |p, (k,v)| p[k.to_sym] = v; p }
     end
     
-    def method
-      @rack_request.request_method.downcase
-    end
-    
+    # Returns the snip referenced by the request's URL. Performs no exception
+    # handling, so if the snip does not exist, an exception will be thrown.
     def snip
       Vanilla.snip(snip_name)
     end
@@ -30,6 +28,7 @@ module Vanilla
     def determine_request_uri_parts
       @snip_name, @part, @format = request_uri_parts(@rack_request)
       @format ||= 'html'
+      @method = (params.delete(:_method) || @rack_request.request_method).downcase
     end
     
     # TODO: this is ugly, but cgi on dreamhost doesn't give anything in path_info

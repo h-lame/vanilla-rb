@@ -65,6 +65,7 @@ module Vanilla
         e.backtrace.join("\n").gsub("<", "&lt;").gsub(">", "&gt;") + "</pre>"
     end
     
+    # Other things can call this when a snip cannot be loaded.
     def render_missing_snip(snip_name)
       "[snip '#{snip_name}' cannot be found]"
     end

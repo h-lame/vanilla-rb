@@ -20,6 +20,10 @@ describe Vanilla::Request, "when requesting urls" do
   it "should have a default format of html" do
     @request.format.should == 'html'
   end
+  
+  it "should determine the request method" do
+    @request.method.should == 'get'
+  end
 end
 
 describe Vanilla::Request, "when requesting a snip part" do
@@ -60,5 +64,11 @@ describe Vanilla::Request, "when requesting a snip part with a format" do
   
   it "should use the filename part of the second segment as the snip part" do
     @request.part.should == "part"
+  end
+end
+
+describe Vanilla::Request, "when requested with a _method paramter" do
+  it "should return the method using the parameter" do
+    mock_request("/snip?_method=put").method.should == 'put'
   end
 end
