@@ -4,6 +4,6 @@ class NewSnip < Dynasnip
   snip_name :new
   
   def handle(*arg)
-    Vanilla.render('edit', :template, context.merge(:snip_to_edit => 'blank'), [], Vanilla::Renderers::Erb)
+    Vanilla::Renderers::Erb.new(app).render(Vanilla.snip('edit'), :template)
   end
 end

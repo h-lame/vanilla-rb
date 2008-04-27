@@ -6,7 +6,7 @@ class EditSnip < Dynasnip
   snip_name "edit"
   
   def get(*args)
-    snip_in_edit_template = Vanilla.render_without_including_snips('edit', :template, context, [], Vanilla::Renderers::Erb)
+    snip_in_edit_template = Vanilla::Renderers::Erb.new(app).render_without_including_snips(Vanilla.snip('edit'), :template)
     prevent_snip_inclusion(snip_in_edit_template)
   end
   
@@ -36,7 +36,7 @@ class EditSnip < Dynasnip
   attribute :template, %{
     <form action="<%= Vanilla::Routes.url_to 'edit' %>" method="post">
     <dl class="attributes">
-      <% snip_to_edit = Snip[context[:snip_to_edit]] %>
+      <% snip_to_edit = Vanilla.snip(app.request.params[:snip_to_edit]) rescue Snip.new %>
       <% snip_to_edit.attributes.each do |name, value| %>
       <dt><%= name %></dt>
       <% num_rows = value.split("\n").length + 1 %>

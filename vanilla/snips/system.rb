@@ -1,4 +1,4 @@
-system = Snip['system'] || Snip.new(:name => "system")
+system = Snip.new(:name => "system")
 system.content = "You're in the system snip now. You probably want to {edit_link system,edit} it though."
 
 system.main_template = <<-HTML

@@ -38,7 +38,7 @@ describe Vanilla::Renderers::Base, "in general" do
   it "should call prepare before rendering" do
     snip = create_snip(:name => "test", :content => "some snip")
     @renderer.should_receive(:prepare).with(snip, :content, [])
-    puts @renderer.render(snip)
+    @renderer.render(snip)
   end
 end
 

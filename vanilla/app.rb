@@ -18,7 +18,6 @@ module Vanilla
     #   :method => GET/POST/DELETE/PUT [OPTIONAL]
     #
     def present
-      puts "presenting: #{request.format}"
       case request.format
       when 'html', nil
         Renderers::Erb.new(self).render(Vanilla.snip('system'), :main_template)
