@@ -21,9 +21,10 @@ class Dynasnip < Vanilla::Renderers::Base
     end
   end
   
-  def self.attribute(attribute_name, attribute_value)
+  def self.attribute(attribute_name, attribute_value=nil)
     @attributes ||= {}
-    @attributes[attribute_name.to_sym] = attribute_value
+    @attributes[attribute_name.to_sym] = attribute_value if attribute_value
+    @attributes[attribute_name.to_sym]
   end
   
   def self.usage(str)
@@ -41,6 +42,14 @@ class Dynasnip < Vanilla::Renderers::Base
     snip_attributes.merge!(@attributes) if @attributes
     snip = Snip.new(snip_attributes).save
     snip
+  end
+  
+  def method_missing(method, *args)
+    if part = self.class.attribute(method)
+      part
+    else
+      super
+    end
   end
   
   # dynasnips gain access to the context in the same way as Render::Base
@@ -65,7 +74,7 @@ class Dynasnip < Vanilla::Renderers::Base
   end
   
   def cleaned_params
-    p = context.dup
+    p = app.request.params.dup
     p.delete(:snip)
     p.delete(:format)
     p.delete(:method)

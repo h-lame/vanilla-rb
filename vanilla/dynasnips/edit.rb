@@ -1,16 +1,21 @@
 require 'vanilla/dynasnip'
+require 'vanilla/dynasnips/login'
 
 # The edit dyna will load the snip given in the 'snip_to_edit' part of the
 # params
 class EditSnip < Dynasnip
+  include Login::Helper
+  
   snip_name "edit"
   
   def get(snip_name=nil)
+    return login_required unless logged_in?
     snip = Vanilla.snip(snip_name || app.request.params[:snip_to_edit])
     edit(snip)
   end
   
   def post(*args)
+    return login_required unless logged_in?
     snip_attributes = cleaned_params
     snip_attributes.delete(:save_button)
 

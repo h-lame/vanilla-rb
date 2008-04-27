@@ -4,10 +4,11 @@ require 'vanilla/request'
 module Vanilla
   class App
     
-    attr_reader :request
+    attr_reader :request, :response
     
     def initialize(request)
       @request = request
+      @response = Rack::Response.new
     end
 
     # Params should be the HTTP query parameters as a symbolized Hash, 
@@ -17,8 +18,9 @@ module Vanilla
     #   :format => the format to render [OPTIONAL]
     #   :method => GET/POST/DELETE/PUT [OPTIONAL]
     #
+    # Returns a Rack::Response object
     def present
-      case request.format
+      output = case request.format
       when 'html', nil
         Renderers::Erb.new(self).render(Vanilla.snip('system'), :main_template)
       when 'raw'
@@ -28,6 +30,8 @@ module Vanilla
       else
         "Unknown format '#{request.format}'"
       end
+      @response.write(output)
+      @response.finish
     end
 
     # render a snip using either the renderer given, or the renderer

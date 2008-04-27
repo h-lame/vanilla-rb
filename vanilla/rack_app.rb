@@ -23,7 +23,7 @@ module Vanilla
     def call(env)
       request = request_for(env)
       if request.snip_name
-        [200, {"Content-Type" => "text/html"}, [Vanilla::App.new(request).present]]
+        Vanilla::App.new(request).present
       else
         # four_oh_four = Vanilla::App.new.present(:snip => 'system', :part => 'four_oh_four', :format => 'html')
         [404, {"Content-Type" => "text/html"}, [four_oh_four]]

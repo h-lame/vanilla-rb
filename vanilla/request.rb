@@ -23,6 +23,10 @@ module Vanilla
       Vanilla.snip(snip_name)
     end
     
+    def cookies
+      @rack_request.cookies
+    end
+    
     private
     
     def determine_request_uri_parts
