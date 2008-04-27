@@ -4,6 +4,6 @@ class NewSnip < Dynasnip
   snip_name :new
   
   def handle(*arg)
-    Vanilla::Renderers::Erb.new(app).render(Vanilla.snip('edit'), :template)
+    editor = EditSnip.new(app).edit(Snip.new(:name => 'newsnip', :render_as => ''))
   end
 end
