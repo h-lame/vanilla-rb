@@ -37,7 +37,7 @@ module Vanilla
     
     # TODO: this is ugly, but cgi on dreamhost doesn't give anything in path_info
     def uri_path(request)
-      @dreamhost_fix ? env["SCRIPT_URL"] : request.path_info
+      @dreamhost_fix ? request.env["SCRIPT_URL"] : request.path_info
     end
     
     URL_ROOT          = /\A\/\Z/                                  # i.e. /
